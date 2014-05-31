@@ -1,6 +1,6 @@
 # Gradle Witness
 
-A gradle plugin that enables static verification of a sha256 hash for remote dependencies.
+A gradle plugin that enables static verification for remote dependencies.
 
 Build systems like gradle and maven allow one to specify dependencies on versioned artifacts. An
 Android project might list dependencies like this:

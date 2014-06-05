@@ -2,7 +2,7 @@
 
 A gradle plugin that enables static verification for remote dependencies.
 
-Build systems like gradle and maven allow one to specify dependencies on versioned artifacts. An
+Build systems like gradle and maven allow one to specify dependencies for versioned artifacts. An
 Android project might list dependencies like this:
 
     dependency {
@@ -71,7 +71,7 @@ is later compromised, an attacker won't be able to undetectably modify these art
 ## Using Witness
 
 Unfortunately, it doesn't make sense to publish `gradle-witness` as an artifact, since that
-creates a bootstrapping problem.  To use, `gradle-witness`, the jar needs to be built and included
+creates a bootstrapping problem.  To use `gradle-witness`, the jar needs to be built and included
 in your project:
 
     $ git clone https://github.com/WhisperSystems/gradle-witness.git
@@ -91,6 +91,8 @@ It might look something like:
             classpath files('libs/gradle-witness.jar')
         }
     }
+
+    apply plugin: 'witness'
 
 At this point you can use `gradle-witness` in your project.  If you're feeling "trusting on first
 use," you can have `gradle-witness` calculate the sha256sum for all your project's dependencies

@@ -53,7 +53,7 @@ class WitnessPlugin implements Plugin<Project> {
 
             project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each {
                 dep ->
-                    println "        '" + dep.resolvedDependency.moduleGroup+ ":" + dep.name + ":" + calculateSha256(dep.file) + "',"
+                    println "        '" + dep.group + ":" + dep.name + ":" + calculateSha256(dep.file) + "',"
             }
 
             println "    ]"

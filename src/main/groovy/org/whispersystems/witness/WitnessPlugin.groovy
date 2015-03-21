@@ -41,8 +41,9 @@ class WitnessPlugin implements Plugin<Project> {
                         throw new InvalidUserDataException("No dependency for integrity assertion found: " + group + ":" + name)
                     }
 
-                    if (!hash.equals(calculateSha256(dependency.file))) {
-                        throw new InvalidUserDataException("Checksum failed for " + assertion)
+                    String calculatedHash = calculateSha256(dependency.file)
+                    if (!hash.equals(calculatedHash)) {
+                        throw new InvalidUserDataException("Checksum failed for " + assertion + "\ncalculated checksum: " + calculatedHash)
                     }
             }
         }

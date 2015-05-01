@@ -24,6 +24,7 @@ class WitnessPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.create("dependencyVerification", WitnessPluginExtension)
         project.afterEvaluate {
+            String failedChecksumsError = ""
             project.dependencyVerification.verify.each {
                 assertion ->
                     List  parts  = assertion.tokenize(":")
@@ -43,8 +44,11 @@ class WitnessPlugin implements Plugin<Project> {
 
                     String calculatedHash = calculateSha256(dependency.file)
                     if (!hash.equals(calculatedHash)) {
-                        throw new InvalidUserDataException("Checksum failed for " + assertion + "\ncalculated checksum: " + calculatedHash)
+                        failedChecksumsError += "Checksum failed for " + assertion + "\ncalculated checksum: " + calculatedHash + "\n\n"
                     }
+            }
+            if (failedChecksumsError != "") {
+                throw new InvalidUserDataException(failedChecksumsError)
             }
         }
 

@@ -9,6 +9,7 @@ import java.security.MessageDigest
 
 class WitnessPluginExtension {
     List verify
+    List includedConfigurations
 }
 
 class WitnessPlugin implements Plugin<Project> {
@@ -23,6 +24,7 @@ class WitnessPlugin implements Plugin<Project> {
 
     void apply(Project project) {
         project.extensions.create("dependencyVerification", WitnessPluginExtension)
+        project.dependencyVerification.includedConfigurations = [project.configurations.compile]
         project.afterEvaluate {
             project.dependencyVerification.verify.each {
                 assertion ->
@@ -31,8 +33,11 @@ class WitnessPlugin implements Plugin<Project> {
                     String name  = parts.get(1)
                     String hash  = parts.get(2)
 
-                    ResolvedArtifact dependency = project.configurations.compile.resolvedConfiguration.resolvedArtifacts.find {
-                        return it.name.equals(name) && it.moduleVersion.id.group.equals(group)
+                    ResolvedArtifact dependency
+                    project.dependencyVerification.includedConfigurations.find{
+                        dependency = it.resolvedConfiguration.resolvedArtifacts.find {
+                            return it.name.equals(name) && it.moduleVersion.id.group.equals(group)
+                        }
                     }
 
                     println "Verifying " + group + ":" + name
@@ -51,9 +56,11 @@ class WitnessPlugin implements Plugin<Project> {
             println "dependencyVerification {"
             println "    verify = ["
 
-            project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each {
-                dep ->
-                    println "        '" + dep.moduleVersion.id.group+ ":" + dep.name + ":" + calculateSha256(dep.file) + "',"
+            project.dependencyVerification.includedConfigurations.each {
+                it.resolvedConfiguration.resolvedArtifacts.each {
+                    dep ->
+                        println "        '" + dep.moduleVersion.id.group+ ":" + dep.name + ":" + calculateSha256(dep.file) + "',"
+                }
             }
 
             println "    ]"

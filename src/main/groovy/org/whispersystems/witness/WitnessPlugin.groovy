@@ -59,6 +59,18 @@ class WitnessPlugin implements Plugin<Project> {
             println "    ]"
             println "}"
         }
+
+        project.task('printDependencyLocations') << {
+            println "Dependency Locations: ["
+        
+            project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each {
+                dep ->
+                    println "        '" + dep.moduleVersion.id.group+ ":" + dep.name + ":" + dep.file + "',"
+            }
+        
+            println "    ]"
+         }
+
     }
 }
 

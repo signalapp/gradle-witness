@@ -31,7 +31,7 @@ class WitnessPlugin implements Plugin<Project> {
                     String name  = parts.get(1)
                     String hash  = parts.get(2)
 
-                    ResolvedArtifact dependency = project.configurations.compile.resolvedConfiguration.resolvedArtifacts.find {
+                    ResolvedArtifact dependency = project.configurations.testCompile.resolvedConfiguration.resolvedArtifacts.find {
                         return it.name.equals(name) && it.moduleVersion.id.group.equals(group)
                     }
 

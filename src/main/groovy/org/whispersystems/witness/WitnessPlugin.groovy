@@ -47,7 +47,7 @@ class WitnessPlugin implements Plugin<Project> {
             }
         }
 
-        project.task('calculateChecksums') << {
+        project.task('calculateChecksums').doLast {
             println "dependencyVerification {"
             println "    verify = ["
 

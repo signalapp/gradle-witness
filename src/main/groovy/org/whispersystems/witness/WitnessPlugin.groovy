@@ -31,11 +31,11 @@ class WitnessPlugin implements Plugin<Project> {
                     String name  = parts.get(1)
                     String hash  = parts.get(2)
 
-                    ResolvedArtifact dependency = project.configurations.compile.resolvedConfiguration.resolvedArtifacts.find {
+                    ResolvedArtifact dependency = project.configurations.testCompile.resolvedConfiguration.resolvedArtifacts.find {
                         return it.name.equals(name) && it.moduleVersion.id.group.equals(group)
                     }
 
-                    println "Verifying " + group + ":" + name
+                    //println "Verifying " + group + ":" + name
 
                     if (dependency == null) {
                         throw new InvalidUserDataException("No dependency for integrity assertion found: " + group + ":" + name)
@@ -47,7 +47,7 @@ class WitnessPlugin implements Plugin<Project> {
             }
         }
 
-        project.task('calculateChecksums') << {
+        project.task('calculateChecksums').doLast {
             println "dependencyVerification {"
             println "    verify = ["
 

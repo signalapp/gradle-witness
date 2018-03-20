@@ -35,7 +35,7 @@ class WitnessPlugin implements Plugin<Project> {
                         return it.name.equals(name) && it.moduleVersion.id.group.equals(group)
                     }
 
-                    println "Verifying " + group + ":" + name
+                    project.logger.info("Verifying " + group + ":" + name)
 
                     if (dependency == null) {
                         throw new InvalidUserDataException("No dependency for integrity assertion found: " + group + ":" + name)

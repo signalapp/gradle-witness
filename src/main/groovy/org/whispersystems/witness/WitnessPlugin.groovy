@@ -38,7 +38,7 @@ class WitnessPlugin implements Plugin<Project> {
                     println "Verifying " + group + ":" + name
 
                     if (dependency == null) {
-                        throw new InvalidUserDataException("No dependency for integrity assertion found: " + group + ":" + name)
+                        return
                     }
 
                     if (!hash.equals(calculateSha256(dependency.file))) {

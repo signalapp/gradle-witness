@@ -1,0 +1,5 @@
+language: groovy
+
+script:
+- gradle build
+- sha256sum build/libs/gradle-witness.jar

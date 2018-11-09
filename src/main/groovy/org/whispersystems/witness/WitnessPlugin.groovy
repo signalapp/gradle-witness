@@ -47,17 +47,19 @@ class WitnessPlugin implements Plugin<Project> {
             }
         }
 
-        project.task('calculateChecksums') << {
-            println "dependencyVerification {"
-            println "    verify = ["
+        project.task('calculateChecksums') {
+            doLast {
+                println "dependencyVerification {"
+                println "    verify = ["
 
-            project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each {
-                dep ->
-                    println "        '" + dep.moduleVersion.id.group+ ":" + dep.name + ":" + calculateSha256(dep.file) + "',"
+                project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each {
+                    dep ->
+                        println "        '" + dep.moduleVersion.id.group+ ":" + dep.name + ":" + calculateSha256(dep.file) + "',"
+                }
+
+                println "    ]"
+                println "}"
             }
-
-            println "    ]"
-            println "}"
         }
     }
 }

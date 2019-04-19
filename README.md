@@ -1,6 +1,6 @@
-# Gradle Witness
+# Gradle Witness - Gradle 5 compatible version
 
-A gradle plugin that enables static verification for remote dependencies.
+A gradle plugin that enables static verification for remote dependencies. This fork of gradle-witness is compatible with gradle 4 and 5.
 
 Build systems like gradle and maven allow one to specify dependencies for versioned artifacts. An
 Android project might list dependencies like this:
